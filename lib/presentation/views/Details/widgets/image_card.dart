@@ -43,12 +43,34 @@ class _ImageCardState extends State<ImageCard> {
                 Image.network(
                   widget.countriesList.flags!.png!,
                   fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
                 ),
                 (widget.countriesList.coatOfArms!.png == null)
                     ? const Center(child: Text("No coat of arms present"))
                     : Image.network(
                         widget.countriesList.coatOfArms!.png!,
                         fit: BoxFit.fitHeight,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
                       ),
               ],
             ),

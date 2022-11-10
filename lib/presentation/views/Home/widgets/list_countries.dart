@@ -17,7 +17,7 @@ class _CountriesWidgetState extends State<CountriesWidget> {
   Widget build(BuildContext context) {
     return GroupedListView<CountriesList, String>(
       elements: widget.countriesList ?? [],
-      groupBy: (coutnry) => (coutnry.name!.official)![0],
+      groupBy: (coutnry) => (coutnry.name!.common)![0],
       itemBuilder: (context, country) {
         return InkWell(
           onTap: () {

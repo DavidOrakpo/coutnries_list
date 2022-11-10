@@ -24,7 +24,8 @@ class CountriesList {
   String? region;
   String? subregion;
   Languages? languages;
-  Translations? translations;
+  // Translations? translations;
+  Map<String, Translation>? translations;
   List<double>? latlng;
   bool? landlocked;
   double? area;
@@ -107,9 +108,16 @@ class CountriesList {
     languages = json['languages'] != null
         ? Languages.fromJson(json['languages'])
         : null;
+    //!New Translation To Json
     translations = json['translations'] != null
-        ? Translations.fromJson(json['translations'])
+        ? Map.from(json["translations"]).map(
+            (k, v) => MapEntry<String, Translation>(k, Translation.fromJson(v)))
         : null;
+
+    // translations = (json['translations'] != null
+    //!Old Translation from json
+    //     ? Translations.fromJson(json['translations'])
+    //     : null) as Map<String, Translation>?;
     latlng = json['latlng'].cast<double>();
     landlocked = json['landlocked'];
     area = json['area'];
@@ -160,8 +168,10 @@ class CountriesList {
     if (languages != null) {
       data['languages'] = languages!.toJson();
     }
+    //!New Translation ToJson
     if (translations != null) {
-      data['translations'] = translations!.toJson();
+      data['translations'] = Map.from(translations!)
+          .map((k, v) => MapEntry<String, dynamic>(k, v.toJson()));
     }
     data['latlng'] = latlng;
     data['landlocked'] = landlocked;
@@ -320,30 +330,198 @@ class Idd {
 
 class Languages {
   String? eng;
-  String? fra;
-  String? kon;
-  String? lin;
-  String? ara;
+  String? fra, lat, tuk, cal;
+  String? kon, est, fij, hif, esp, mkd, ben, msa, tam, amh, ita;
+  String? lin, aym, grn, que, zho, kor, nld, pap, rus, dan, lit;
+  String? ara, por, deu, ltz, gil, ron, lao, mlt, arc, ckb, swa;
 
-  Languages({this.eng, this.fra, this.kon, this.lin, this.ara});
+  List<String?> getLanguages() {
+    return [
+      eng,
+      fra,
+      lat,
+      tuk,
+      cal,
+      kon,
+      est,
+      fij,
+      hif,
+      esp,
+      mkd,
+      ben,
+      msa,
+      tam,
+      amh,
+      ita,
+      lin,
+      aym,
+      grn,
+      que,
+      zho,
+      kor,
+      nld,
+      pap,
+      rus,
+      dan,
+      lit,
+      ara,
+      por,
+      deu,
+      ltz,
+      gil,
+      ron,
+      lao,
+      mlt,
+      arc,
+      ckb,
+      swa,
+    ];
+  }
+
+  Languages({
+    this.aym,
+    this.mkd,
+    this.esp,
+    this.tuk,
+    this.pap,
+    this.fij,
+    this.hif,
+    this.grn,
+    this.dan,
+    this.rus,
+    this.msa,
+    this.tam,
+    this.lit,
+    this.zho,
+    this.kor,
+    this.que,
+    this.eng,
+    this.ita,
+    this.lat,
+    this.cal,
+    this.fra,
+    this.nld,
+    this.amh,
+    this.kon,
+    this.ron,
+    this.est,
+    this.lin,
+    this.lao,
+    this.ara,
+    this.por,
+    this.deu,
+    this.gil,
+    this.ben,
+    this.ltz,
+    this.mlt,
+    this.arc,
+    this.swa,
+    this.ckb,
+  });
 
   Languages.fromJson(Map<String, dynamic> json) {
     eng = json['eng'];
+    cal = json["cal"];
+    fij = json["fij"];
+    hif = json["hif"];
+    ben = json["ben"];
     fra = json['fra'];
     kon = json['kon'];
+    msa = json["msa"];
+    tam = json["tam"];
+    mkd = json["mkd"];
+    ita = json["ita"];
+    lat = json["lat"];
+    esp = json["esp"];
+    kor = json["kor"];
+    nld = json["nld"];
+    lit = json["lit"];
+    amh = json["amh"];
+    tuk = json["tuk"];
+    pap = json["pap"];
+    dan = json["dan"];
+    est = json["est"];
+    zho = json["zho"];
     lin = json['lin'];
     ara = json["ara"];
+    rus = json["rus"];
+    por = json["por"];
+    deu = json["deu"];
+    lao = json["lao"];
+    ltz = json["ltz"];
+    gil = json["gil"];
+    swa = json["swa"];
+    mlt = json["mlt"];
+    ron = json["ron"];
+    arc = json["arc"];
+    ckb = json["ckb"];
+    aym = json["aym"];
+    grn = json["grn"];
+    que = json["que"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['eng'] = eng;
+    data["fij"] = fij;
+    data["hif"] = hif;
+    data["nld"] = nld;
+    data["tuk"] = tuk;
+    data["cal"] = cal;
+    data["pap"] = pap;
+    data["ben"] = ben;
+    data["amh"] = amh;
+    data["msa"] = msa;
+    data["tam"] = tam;
+    data["aym"] = aym;
+    data["esp"] = esp;
+    data["mkd"] = mkd;
+    data["ita"] = ita;
+    data["lat"] = lat;
+    data["grn"] = grn;
+    data["que"] = que;
+    data["zho"] = zho;
+    data["lit"] = lit;
     data['fra'] = fra;
     data['kon'] = kon;
+    data["rus"] = rus;
     data['lin'] = lin;
     data['ara'] = ara;
+    data['por'] = por;
+    data["deu"] = deu;
+    data["est"] = est;
+    data["ltz"] = ltz;
+    data["dan"] = dan;
+    data["gil"] = gil;
+    data["lao"] = lao;
+    data["mlt"] = mlt;
+    data["ron"] = ron;
+    data["arc"] = arc;
+    data["kor"] = kor;
+    data["ckb"] = ckb;
+    data["swa"] = swa;
     return data;
   }
+}
+
+class Translation {
+  Translation({
+    this.official,
+    this.common,
+  });
+
+  String? official;
+  String? common;
+
+  Translation.fromJson(Map<String, dynamic> json) {
+    official = json['official'];
+    common = json['common'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        "official": official,
+        "common": common,
+      };
 }
 
 class Translations {

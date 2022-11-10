@@ -66,16 +66,82 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     formatter: formatter),
                 const SizedBox(
-                  height: 24,
+                  height: 30,
                 ),
 
-                // TextInfo(
-                //     title: "Official languages: ",
-                //     value: widget.countriesList.languages?.eng,
-                //     formatter: formatter),
-                // const SizedBox(
-                //   height: 10,
-                // ),
+                TextInfo(
+                    title: "Official languages: ",
+                    value: widget.countriesList.languages
+                        ?.getLanguages()
+                        .where((element) => element != null)
+                        .firstWhere(
+                          (element) => (element == element),
+                          orElse: () => "English",
+                        ),
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Region: ",
+                    value: widget.countriesList.region,
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Sub Region: ",
+                    value: widget.countriesList.subregion,
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Continent: ",
+                    value: widget.countriesList.continents?.first,
+                    formatter: formatter),
+                const SizedBox(
+                  height: 30,
+                ),
+                TextInfo(
+                    title: "Independent: ",
+                    value: (widget.countriesList.independent)! ? "Yes" : "No",
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Area: ",
+                    value: "${widget.countriesList.area.toString()} km2",
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "UN-Member: ",
+                    value: (widget.countriesList.unMember)! ? "Yes" : "No",
+                    formatter: formatter),
+                const SizedBox(
+                  height: 30,
+                ),
+                TextInfo(
+                    title: "Time Zone:  ",
+                    value: widget.countriesList.timezones?.first,
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Date format:  ",
+                    value: "dd/mm/yyyy",
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Driving Side:  ",
+                    value: widget.countriesList.car?.side?.toUpperCase(),
+                    formatter: formatter)
 
                 // TextInfo(
                 //     title: "Motto: ",
