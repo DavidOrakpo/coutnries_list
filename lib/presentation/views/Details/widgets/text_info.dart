@@ -21,7 +21,7 @@ class TextInfo extends StatelessWidget {
           text: title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 18,
               color: Theme.of(context).colorScheme.primary),
         ),
         TextSpan(
@@ -29,7 +29,7 @@ class TextInfo extends StatelessWidget {
               ? value.toString()
               : formatter!.format(int.parse(value.toString())),
           style: TextStyle(
-              fontSize: 16, color: Theme.of(context).colorScheme.tertiary),
+              fontSize: 18, color: Theme.of(context).colorScheme.tertiary),
         ),
       ],
     ));

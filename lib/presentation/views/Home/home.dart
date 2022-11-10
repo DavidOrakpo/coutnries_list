@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                 (countriesList == null)
                     ? const Center(child: CircularProgressIndicator())
                     : SizedBox(
-                        height: Responsive.isLandScape(context) ? 250 : 500,
+                        height: Responsive.isLandScape(context) ? 250 : 600,
                         child: CountriesWidget(countriesList: countriesList)),
               ],
             ),
