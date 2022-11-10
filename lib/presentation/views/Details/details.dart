@@ -71,13 +71,15 @@ class _DetailsPageState extends State<DetailsPage> {
 
                 TextInfo(
                     title: "Official languages: ",
-                    value: widget.countriesList.languages
-                        ?.getLanguages()
-                        .where((element) => element != null)
-                        .firstWhere(
-                          (element) => (element == element),
-                          orElse: () => "English",
-                        ),
+                    value: (widget.countriesList.languages == null)
+                        ? "None"
+                        : widget.countriesList.languages
+                            ?.getLanguages()
+                            .where((element) => element != null)
+                            .firstWhere(
+                              (element) => (element == element),
+                              orElse: () => "English",
+                            ),
                     formatter: formatter),
                 const SizedBox(
                   height: 10,
@@ -91,7 +93,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
                 TextInfo(
                     title: "Sub Region: ",
-                    value: widget.countriesList.subregion,
+                    value: widget.countriesList.subregion ?? "None",
                     formatter: formatter),
                 const SizedBox(
                   height: 10,

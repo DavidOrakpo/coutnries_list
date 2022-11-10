@@ -1,4 +1,5 @@
 import 'package:coutnries_list/core/services/DataClass/countries_model.dart';
+import 'package:coutnries_list/core/utility/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -42,7 +43,9 @@ class _ImageCardState extends State<ImageCard> {
               children: [
                 Image.network(
                   widget.countriesList.flags!.png!,
-                  fit: BoxFit.cover,
+                  fit: Responsive.isLandScape(context)
+                      ? BoxFit.fitHeight
+                      : BoxFit.cover,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Center(

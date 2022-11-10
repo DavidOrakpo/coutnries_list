@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/services/DataClass/countries_model.dart';
+import '../../../../core/stateManagement/countries_state.dart';
 import '../../../common_widgets/constants.dart';
 
 class CountriesWidget extends StatefulWidget {
@@ -38,7 +40,12 @@ class _CountriesWidgetState extends State<CountriesWidget> {
               ),
             ),
             title: Text(
-              country.name!.common!,
+              (context.watch<CountriesState>().translationSelected)
+                  ? country
+                      .translations![
+                          context.read<CountriesState>().translationString]!
+                      .common!
+                  : country.name!.common!,
               style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
             subtitle: Text(

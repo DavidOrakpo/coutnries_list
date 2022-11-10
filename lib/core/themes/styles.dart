@@ -27,10 +27,12 @@ class Styles {
         tertiary: isDarkTheme
             ? Constants.secondarySubTextColor
             : Constants.primarySubTextColor,
-        onPrimaryContainer:
-            isDarkTheme ? Colors.white54 : Color.fromARGB(255, 17, 60, 95),
+        onPrimaryContainer: isDarkTheme
+            ? Colors.white54
+            : const Color.fromARGB(255, 17, 60, 95),
         inversePrimary: isDarkTheme ? Colors.white : Colors.black,
       ),
+      //!BACKGROUND COLOR FOR SCAFFOLD
       scaffoldBackgroundColor:
           isDarkTheme ? Constants.secondaryBlack : Constants.primaryWhite,
       textTheme: GoogleFonts.rubikTextTheme(Theme.of(context).textTheme),
@@ -44,11 +46,10 @@ class Styles {
       indicatorColor: isDarkTheme
           ? const Color.fromRGBO(5, 70, 123, 1)
           : const Color(0xffCBDCF8),
+
       hintColor:
           isDarkTheme ? const Color(0xff280C0B) : const Color(0xffEECED3),
-      highlightColor: isDarkTheme
-          ? const Color(0xff372901)
-          : Color.fromARGB(185, 121, 165, 209),
+      highlightColor: const Color.fromARGB(185, 121, 165, 209),
       hoverColor:
           isDarkTheme ? const Color(0xff3A3A3B) : const Color(0xff4285F4),
       focusColor:
