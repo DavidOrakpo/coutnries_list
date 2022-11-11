@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:coutnries_list/core/services/countries_service/coutries_service.dart';
 import 'package:coutnries_list/core/stateManagement/countries_state.dart';
 import 'package:coutnries_list/presentation/views/Home/widgets/filter_row.dart';
@@ -5,10 +9,12 @@ import 'package:coutnries_list/presentation/views/Home/widgets/header_row.dart';
 import 'package:coutnries_list/presentation/views/Home/widgets/list_countries.dart';
 import 'package:coutnries_list/presentation/views/Home/widgets/search_bar.dart';
 import 'package:coutnries_list/presentation/views/Home/widgets/search_row.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/services/DataClass/countries_model.dart';
@@ -24,11 +30,62 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<CountriesList>? countriesList;
+  StreamSubscription? subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+
     getLists();
+    getConnectionState();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
+  }
+
+  Future<void> getConnectionState() async {
+    isDeviceConnected = await InternetConnectionChecker().hasConnection;
+    if (!isDeviceConnected) {
+      showDialogBox();
+    }
+  }
+
+  void showDialogBox() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: Text("Offline",
+            style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+        elevation: 24,
+        content: Text(
+          "Not Connected to the internet. Connect To Internet and Try again",
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+        ),
+        actions: [
+          TextButton(
+            child: Text(
+              "Ok",
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            ),
+            onPressed: () async {
+              Navigator.pop(context);
+              await Future.delayed(
+                const Duration(milliseconds: 500),
+                () => getConnectionState(),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   void getLists() async {

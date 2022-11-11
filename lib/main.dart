@@ -1,9 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:coutnries_list/core/stateManagement/countries_state.dart';
 import 'package:coutnries_list/presentation/views/Home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
+import 'core/services/connectivity/connectivity.dart';
 import 'core/stateManagement/dark_theme_provider.dart';
 import 'core/themes/styles.dart';
 import 'core/utility/routes/routes_manager.dart';
@@ -25,6 +27,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
     getCurrentAppTheme();
   }

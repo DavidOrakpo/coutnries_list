@@ -1,20 +1,26 @@
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:coutnries_list/core/extensions/extensions.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../DataClass/countries_model.dart';
+import '../connectivity/connectivity_retrier.dart';
+import '../connectivity/interceptor.dart';
 
 class CountriesService {
   CountriesService() {
-    initializeInterceptors();
+    initializeNewInterceptors();
   }
   Response<String>? response;
   final _dio = Dio(
     BaseOptions(
-        headers: {"Accept": "application/json"},
-        baseUrl: "https://restcountries.com/v3.1"),
+      headers: {"Accept": "application/json"},
+      baseUrl: "https://restcountries.com/v3.1",
+      // connectTimeout: 15000,
+      // receiveTimeout: 15000,
+    ),
   );
 
   Future<List<CountriesList>> getCountries() async {
@@ -87,6 +93,17 @@ class CountriesService {
     return list;
   }
 
+  void initializeNewInterceptors() {
+    _dio.interceptors.add(
+      RetryOnConnectionChangeInterceptor(
+        requestRetrier: DioConnectivityRequestRetrier(
+          dio: _dio,
+          connectivity: Connectivity(),
+        ),
+      ),
+    );
+  }
+
   void initializeInterceptors() {
     _dio.interceptors.add(
       InterceptorsWrapper(onError: (e, handler) {
@@ -107,10 +124,15 @@ class CountriesService {
             print("The error is send. Message is ${e.message}");
             break;
           case DioErrorType.other:
+            if (e.message.contains("SocketException")) {
+              // throw SocketException(e.message);
+            }
             print("The error is other. Message is ${e.message}");
             print("Socket Exception");
             print("${e.error}");
             print("${e.type}");
+            // handler.reject(e);
+
             if (e.error == SocketException(e.message)) {}
             break;
           default:
