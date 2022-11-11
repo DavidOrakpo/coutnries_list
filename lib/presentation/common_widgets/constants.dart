@@ -151,9 +151,9 @@ class Constants {
                       children: [
                         ConstrainedBox(
                           constraints: BoxConstraints(
-                            minHeight: 150,
+                            minHeight: 80,
                             maxHeight: bottomSheetHeight * 0.5,
-                            maxWidth: bottomSheetWidth!,
+                            maxWidth: bottomSheetWidth,
                           ),
                           child: ListView.builder(
                             itemCount: context
@@ -227,7 +227,7 @@ class Constants {
                       children: [
                         ConstrainedBox(
                           constraints: BoxConstraints(
-                            minHeight: 150,
+                            minHeight: 80,
                             maxHeight: bottomSheetHeight * 0.6,
                             maxWidth: bottomSheetWidth,
                           ),
