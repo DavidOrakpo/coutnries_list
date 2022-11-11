@@ -141,8 +141,8 @@ class Constants {
                         alignment: Alignment.center,
                         child: Icon(
                           isExpandedRegion
-                              ? Icons.arrow_drop_down
-                              : Icons.arrow_drop_up,
+                              ? Icons.arrow_drop_up
+                              : Icons.arrow_drop_down,
                           color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
@@ -150,7 +150,7 @@ class Constants {
                         ConstrainedBox(
                           constraints: BoxConstraints(
                             minHeight: 150,
-                            maxHeight: bottomSheetHeight * 0.6,
+                            maxHeight: bottomSheetHeight * 0.5,
                           ),
                           child: ListView.builder(
                             itemCount: context
@@ -347,17 +347,6 @@ class Constants {
                                     () {},
                                   );
                                 } else {
-                                  // for (var timeZone in context
-                                  //     .read<CountriesState>()
-                                  //     .selectableTimeZoneList) {
-                                  //   timeZone.isSelected = false;
-                                  // }
-                                  // for (var region in context
-                                  //     .read<CountriesState>()
-                                  //     .selectableRegionList) {
-                                  //   region.isSelected = false;
-                                  // }
-
                                   context.read<CountriesState>().isFiltered =
                                       false;
                                 }
