@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
-import 'core/services/connectivity/connectivity.dart';
 import 'core/stateManagement/dark_theme_provider.dart';
 import 'core/themes/styles.dart';
 import 'core/utility/routes/routes_manager.dart';

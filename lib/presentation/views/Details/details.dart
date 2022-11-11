@@ -143,6 +143,35 @@ class _DetailsPageState extends State<DetailsPage> {
                 TextInfo(
                     title: "Driving Side:  ",
                     value: widget.countriesList.car?.side?.toUpperCase(),
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Latitude:  ",
+                    value: widget.countriesList.latlng?.first.toString(),
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Longitude:  ",
+                    value: widget.countriesList.latlng?.last.toString(),
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "First Day of the Week:  ",
+                    value: widget.countriesList.startOfWeek.toString(),
+                    formatter: formatter),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextInfo(
+                    title: "Officially Assigned:  ",
+                    value:
+                        widget.countriesList.status?.toString().toUpperCase(),
                     formatter: formatter)
 
                 // TextInfo(

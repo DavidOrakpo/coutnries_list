@@ -31,6 +31,22 @@ class DioConnectivityRequestRetrier {
     );
   }
 
+  ///
+  ///void initializeNewInterceptors() {
+  //   _dio.interceptors.add(
+  //     RetryOnConnectionChangeInterceptor(
+  //       requestRetrier: DioConnectivityRequestRetrier(
+  //         dio: _dio,
+  //         connectivity: Connectivity(),
+  //       ),
+  //     ),
+  //   );
+  // }
+  ///
+  ///
+  ///
+  ///
+  ///
   // Future<Response> scheduleRequestRetry(RequestOptions requestOptions) async {
   //   StreamSubscription streamSubscription;
   //   final responseCompleter = Completer<Response>();
