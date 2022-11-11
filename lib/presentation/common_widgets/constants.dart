@@ -62,7 +62,8 @@ class Constants {
   static String groupValue = "eng";
   static bool isExpandedTimeZone = false, isExpandedRegion = false;
 
-  static void filter(BuildContext context, {double? bottomSheetHeight}) {
+  static void filter(BuildContext context,
+      {double? bottomSheetHeight, double? bottomSheetWidth}) {
     showModalBottomSheet(
       isScrollControlled: true,
       isDismissible: true,
@@ -78,6 +79,7 @@ class Constants {
               // height: bottomSheetHeight,
               constraints: BoxConstraints(
                 maxHeight: bottomSheetHeight!,
+                maxWidth: bottomSheetWidth!,
                 minHeight: 200,
               ),
               decoration: BoxDecoration(
@@ -151,6 +153,7 @@ class Constants {
                           constraints: BoxConstraints(
                             minHeight: 150,
                             maxHeight: bottomSheetHeight * 0.5,
+                            maxWidth: bottomSheetWidth!,
                           ),
                           child: ListView.builder(
                             itemCount: context
@@ -226,6 +229,7 @@ class Constants {
                           constraints: BoxConstraints(
                             minHeight: 150,
                             maxHeight: bottomSheetHeight * 0.6,
+                            maxWidth: bottomSheetWidth,
                           ),
                           child: ListView.builder(
                             itemCount: context

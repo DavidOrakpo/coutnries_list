@@ -53,8 +53,11 @@ class FilterRow extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Constants.filter(context,
-                bottomSheetHeight: MediaQuery.of(context).size.height * 0.75);
+            Constants.filter(
+              context,
+              bottomSheetHeight: MediaQuery.of(context).size.height * 0.75,
+              bottomSheetWidth: MediaQuery.of(context).size.width,
+            );
           },
           child: Container(
             height: 50,

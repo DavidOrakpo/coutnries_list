@@ -41,7 +41,7 @@ If I had more time, I would have loved to fully implement the filtering function
 My major challenge faced, was parsing the JSON data. The response was quite complex to say the least. Auto JSON to Dart converters onllnie never truly generated an error free class. I had to do alot of debugging and work on Post Man to figure out what was going on.
 However, I now have a better understanding on how toJson and fromJson functions work.
 
-Also, On trying the app via appetizer, the internet network checker does not seem to be working with the online emulator. This causes the pop up to be repeated over and over as it searches for an internet connection. Please, install the apk from the google drive below to experience it's full capabilities.
+
 # Links and Files
 
 The link to the apk can be foud [here](https://drive.google.com/drive/folders/1ACY3szOVTaz0POK1I3Xce5mysf7UrEcO?usp=sharing), while the appetize link can be foud [here](https://appetize.io/app/x5disfqsllokug2rv4t2romumu?device=pixel6&osVersion=12.0&scale=75)
