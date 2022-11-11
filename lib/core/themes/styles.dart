@@ -23,6 +23,10 @@ class Styles {
         onSecondary: isDarkTheme
             ? Constants.secondaryIconColor
             : Constants.primaryIconColor,
+
+        //! Color for check box backgroudn
+        secondaryContainer:
+            isDarkTheme ? Constants.primaryWhite : Constants.primaryBlack,
         //!Color for Sub Texts
         tertiary: isDarkTheme
             ? Constants.secondarySubTextColor
@@ -30,7 +34,7 @@ class Styles {
         onPrimaryContainer: isDarkTheme
             ? Colors.white54
             : const Color.fromARGB(255, 17, 60, 95),
-        inversePrimary: isDarkTheme ? Colors.white : Colors.black,
+        inversePrimary: isDarkTheme ? Colors.black : Colors.white,
       ),
       //!BACKGROUND COLOR FOR SCAFFOLD
       scaffoldBackgroundColor:

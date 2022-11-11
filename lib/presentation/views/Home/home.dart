@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                     : SizedBox(
                         height: Responsive.isLandScape(context)
                             ? 250
-                            : size.height * 0.67,
+                            : size.height * 0.62,
                         child: CountriesWidget(countriesList: countriesList)),
               ],
             ),

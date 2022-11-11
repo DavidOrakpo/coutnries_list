@@ -27,6 +27,34 @@ class CountriesService {
     return countriesList;
   }
 
+  Future<List<String>> getTimeZone(List<CountriesList> countriesList) async {
+    var list = <String>[];
+    for (var i = 0; i < countriesList.length; i++) {
+      var country = countriesList[i];
+      if (country.timezones != null) {
+        var timeZone = country.timezones!;
+
+        list.addAllUnique(timeZone);
+      }
+    }
+    list.sort((a, b) => a.compareTo(b));
+
+    return list;
+  }
+
+  Future<List<String>> getRegion(List<CountriesList> countriesList) async {
+    var list = <String>[];
+    for (var i = 0; i < countriesList.length; i++) {
+      var country = countriesList[i];
+      if (country.region != null && !(list.contains(country.region))) {
+        list.add(country.region!);
+      }
+    }
+    list.sort((a, b) => a.compareTo(b));
+
+    return list;
+  }
+
   Future<List<String>> getLanguages(List<CountriesList> countriesList) async {
     var list = <String>[];
     for (var i = 0; i < countriesList.length; i++) {

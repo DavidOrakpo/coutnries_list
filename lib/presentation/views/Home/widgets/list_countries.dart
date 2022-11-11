@@ -17,9 +17,52 @@ class CountriesWidget extends StatefulWidget {
 class _CountriesWidgetState extends State<CountriesWidget> {
   @override
   Widget build(BuildContext context) {
+    var isSelectedRegion = context
+        .read<CountriesState>()
+        .selectableRegionList
+        .where(
+          (element) => element.isSelected == true,
+        )
+        .map((e) => e.data)
+        .toList();
     return GroupedListView<CountriesList, String>(
-      elements: widget.countriesList ?? [],
-      groupBy: (coutnry) => (coutnry.name!.common)![0],
+      elements: (context.watch<CountriesState>().isFiltered)
+          ? widget.countriesList!
+              .where((element) => isSelectedRegion.contains(element.region))
+              .toList()
+          : widget.countriesList!,
+      groupBy: (context.watch<CountriesState>().isFiltered)
+          //!IS FIltered
+          ? (coutnry) {
+              var isSelectedRegion = context
+                  .read<CountriesState>()
+                  .selectableRegionList
+                  .where(
+                    (element) => element.isSelected == true,
+                  )
+                  .map((e) => e.data)
+                  .toList();
+              return (context.watch<CountriesState>().translationSelected &&
+                      isSelectedRegion.contains(coutnry.region))
+                  //!IS FILTERED AND TRANSLATED
+                  ? coutnry.region!
+                  //!IS FILTERED AND NOT TRANSLATED
+                  : coutnry.region!;
+            }
+          //! IS NOT FILTERED
+          : (coutnry) {
+              return (context.watch<CountriesState>().translationSelected)
+                  ? (coutnry.translations![context
+                              .read<CountriesState>()
+                              .translationString] ==
+                          null)
+                      ? coutnry.name!.common![0]
+                      : coutnry
+                          .translations![
+                              context.read<CountriesState>().translationString]!
+                          .common![0]
+                  : coutnry.name!.common![0];
+            },
       itemBuilder: (context, country) {
         return InkWell(
           onTap: () {
@@ -40,12 +83,33 @@ class _CountriesWidgetState extends State<CountriesWidget> {
               ),
             ),
             title: Text(
-              (context.watch<CountriesState>().translationSelected)
-                  ? country
-                      .translations![
-                          context.read<CountriesState>().translationString]!
-                      .common!
-                  : country.name!.common!,
+              (context.watch<CountriesState>().isFiltered)
+                  //!TEXT IS FILTERED
+
+                  ? (context.watch<CountriesState>().translationSelected &&
+                          context
+                              .read<CountriesState>()
+                              .selectableRegionList
+                              .where(
+                                (element) => element.isSelected == true,
+                              )
+                              .map((e) => e.data)
+                              .toList()
+                              .contains(country.region))
+                      //!TEXT IS FILTERED AND TRANSLATED
+                      ? country
+                          .translations![
+                              context.read<CountriesState>().translationString]!
+                          .common!
+                      //!TEXT IS FILTERED AND NOT TRANSLATED
+                      : country.name!.common!
+                  //!TEXT IS NOT FILTERED
+                  : (context.watch<CountriesState>().translationSelected)
+                      ? country
+                          .translations![
+                              context.read<CountriesState>().translationString]!
+                          .common!
+                      : country.name!.common!,
               style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
             subtitle: Text(
