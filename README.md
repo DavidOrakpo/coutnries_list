@@ -34,7 +34,8 @@ I made use of a few libraries to accomplish this project. Their names along with
 
 
 # Wish List of Features
-If I had more time, I would have loved to fully implement the filtering functionality. I was only able to get filtering down to Regions. I attempted a go at TimeZones but ran into alot of errors and not enough time to hash them out. Nonetheless, alot was learned during this task
+I initially had a shortage of time to implement the filtering of the Time Zones. But due to an extension given, I was able to get it working.
+
 
 
 # Challenges Faced
