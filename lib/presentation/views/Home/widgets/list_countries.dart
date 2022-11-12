@@ -15,9 +15,8 @@ class CountriesWidget extends StatefulWidget {
 }
 
 class _CountriesWidgetState extends State<CountriesWidget> {
-  @override
-  Widget build(BuildContext context) {
-    var isSelectedRegion = context
+  List<CountriesList> groupedCountriesList(BuildContext context) {
+    var selectedRegionList = context
         .read<CountriesState>()
         .selectableRegionList
         .where(
@@ -25,44 +24,116 @@ class _CountriesWidgetState extends State<CountriesWidget> {
         )
         .map((e) => e.data)
         .toList();
+
+    var selectedTimeZoneList = context
+        .read<CountriesState>()
+        .selectableTimeZoneList
+        .where(
+          (element) => element.isSelected == true,
+        )
+        .map((e) => e.data)
+        .toList();
+    //!FILTERED
+    if ((context.watch<CountriesState>().isFiltered)) {
+      //!BOTH FILTERED
+      if (context.read<CountriesState>().isRegionFiltered &&
+          context.read<CountriesState>().isTimeZoneFiltered) {
+        return widget.countriesList!
+            .where((country) => (selectedRegionList.contains(country.region) &&
+                country.timezones!.toSet().containsAll(selectedTimeZoneList)))
+            .toList();
+      } else {
+        //!REGION FILTERED ONLY
+        if (context.read<CountriesState>().isRegionFiltered &&
+            !context.read<CountriesState>().isTimeZoneFiltered) {
+          return widget.countriesList!
+              .where((country) => selectedRegionList.contains(country.region))
+              .toList();
+        }
+        //!TIME ZONE FILTERED ONLY
+        else if (!context.read<CountriesState>().isRegionFiltered &&
+            context.read<CountriesState>().isTimeZoneFiltered) {
+          return widget.countriesList!
+              .where((country) =>
+                  selectedTimeZoneList.toSet().containsAll(country.timezones!))
+              .toList();
+        } else {
+          return widget.countriesList!
+              .where((country) =>
+                  country.timezones!.toSet().containsAll(selectedTimeZoneList))
+              .toList();
+        }
+      }
+    } else {
+      //!NOT FILTERED
+      return widget.countriesList!;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String groupBy(CountriesList country) {
+      // var selectedRegionList = context
+      //     .read<CountriesState>()
+      //     .selectableRegionList
+      //     .where(
+      //       (element) => element.isSelected == true,
+      //     )
+      //     .map((e) => e.data)
+      //     .toList();
+
+      // var selectedTimeZoneList = context
+      //     .read<CountriesState>()
+      //     .selectableTimeZoneList
+      //     .where(
+      //       (element) => element.isSelected == true,
+      //     )
+      //     .map((e) => e.data)
+      //     .toList();
+      //!FILTERED
+      if ((context.watch<CountriesState>().isFiltered)) {
+        //!BOTH FILTERED
+        if (context.read<CountriesState>().isRegionFiltered &&
+            context.read<CountriesState>().isTimeZoneFiltered) {
+          return "${country.region} ${country.timezones!.first}";
+        } else {
+          //!REGION FILTERED ONLY
+          if (context.read<CountriesState>().isRegionFiltered &&
+              !context.read<CountriesState>().isTimeZoneFiltered) {
+            return "${country.region}";
+          } else if (!context.read<CountriesState>().isRegionFiltered &&
+              context.read<CountriesState>().isTimeZoneFiltered) {
+            return country.timezones!.first;
+          } else {
+            return country.timezones!.first;
+          }
+        }
+      } else {
+        //!NOT FILTERED
+        return (context.watch<CountriesState>().translationSelected)
+            ? (country.translations![
+                        context.read<CountriesState>().translationString] ==
+                    null)
+                ? country.name!.common![0]
+                : country
+                    .translations![
+                        context.read<CountriesState>().translationString]!
+                    .common![0]
+            : country.name!.common![0];
+      }
+    }
+
+    // var selectedRegionList = context
+    //     .read<CountriesState>()
+    //     .selectableRegionList
+    //     .where(
+    //       (element) => element.isSelected == true,
+    //     )
+    //     .map((e) => e.data)
+    //     .toList();
     return GroupedListView<CountriesList, String>(
-      elements: (context.watch<CountriesState>().isFiltered)
-          ? widget.countriesList!
-              .where((element) => isSelectedRegion.contains(element.region))
-              .toList()
-          : widget.countriesList!,
-      groupBy: (context.watch<CountriesState>().isFiltered)
-          //!IS FIltered
-          ? (coutnry) {
-              var isSelectedRegion = context
-                  .read<CountriesState>()
-                  .selectableRegionList
-                  .where(
-                    (element) => element.isSelected == true,
-                  )
-                  .map((e) => e.data)
-                  .toList();
-              return (context.watch<CountriesState>().translationSelected &&
-                      isSelectedRegion.contains(coutnry.region))
-                  //!IS FILTERED AND TRANSLATED
-                  ? coutnry.region!
-                  //!IS FILTERED AND NOT TRANSLATED
-                  : coutnry.region!;
-            }
-          //! IS NOT FILTERED
-          : (coutnry) {
-              return (context.watch<CountriesState>().translationSelected)
-                  ? (coutnry.translations![context
-                              .read<CountriesState>()
-                              .translationString] ==
-                          null)
-                      ? coutnry.name!.common![0]
-                      : coutnry
-                          .translations![
-                              context.read<CountriesState>().translationString]!
-                          .common![0]
-                  : coutnry.name!.common![0];
-            },
+      elements: groupedCountriesList(context),
+      groupBy: groupBy,
       itemBuilder: (context, country) {
         return InkWell(
           onTap: () {

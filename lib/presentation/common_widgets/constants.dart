@@ -62,6 +62,7 @@ class Constants {
   static String groupValue = "eng";
   static bool isExpandedTimeZone = false, isExpandedRegion = false;
 
+  // !FILTER FUNCTIONALITY
   static void filter(BuildContext context,
       {double? bottomSheetHeight, double? bottomSheetWidth}) {
     showModalBottomSheet(
@@ -183,6 +184,9 @@ class Constants {
                                   setState(
                                     () {
                                       region.isSelected = value!;
+                                      context
+                                          .read<CountriesState>()
+                                          .isRegionFiltered = value;
                                     },
                                   );
                                 },
@@ -259,6 +263,9 @@ class Constants {
                                   setState(
                                     () {
                                       timeZone.isSelected = value!;
+                                      context
+                                          .read<CountriesState>()
+                                          .isTimeZoneFiltered = value;
                                     },
                                   );
                                 },
@@ -307,6 +314,12 @@ class Constants {
                                   }
                                   context.read<CountriesState>().isFiltered =
                                       false;
+                                  context
+                                      .read<CountriesState>()
+                                      .isRegionFiltered = false;
+                                  context
+                                      .read<CountriesState>()
+                                      .isTimeZoneFiltered = false;
                                   setState(
                                     () {},
                                   );
@@ -335,16 +348,26 @@ class Constants {
                               textColor: Colors.white,
                               backgroundColor: Colors.orange,
                               onPressed: () {
-                                if (context
-                                        .read<CountriesState>()
-                                        .selectableRegionList
-                                        .isNotEmpty &&
-                                    context
-                                        .read<CountriesState>()
-                                        .selectableRegionList
-                                        .where((element) =>
-                                            element.isSelected == true)
-                                        .isNotEmpty) {
+                                if ((context
+                                            .read<CountriesState>()
+                                            .selectableRegionList
+                                            .isNotEmpty &&
+                                        context
+                                            .read<CountriesState>()
+                                            .selectableRegionList
+                                            .where((element) =>
+                                                element.isSelected == true)
+                                            .isNotEmpty) ||
+                                    (context
+                                            .read<CountriesState>()
+                                            .selectableTimeZoneList
+                                            .isNotEmpty &&
+                                        context
+                                            .read<CountriesState>()
+                                            .selectableTimeZoneList
+                                            .where((element) =>
+                                                element.isSelected == true)
+                                            .isNotEmpty)) {
                                   context.read<CountriesState>().isFiltered =
                                       true;
                                   setState(
@@ -353,6 +376,12 @@ class Constants {
                                 } else {
                                   context.read<CountriesState>().isFiltered =
                                       false;
+                                  context
+                                      .read<CountriesState>()
+                                      .isRegionFiltered = false;
+                                  context
+                                      .read<CountriesState>()
+                                      .isTimeZoneFiltered = false;
                                 }
 
                                 Navigator.pop(context);

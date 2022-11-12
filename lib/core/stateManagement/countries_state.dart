@@ -29,6 +29,24 @@ class CountriesState with ChangeNotifier {
     notifyListeners();
   }
 
+  //! BOOLEAN MANAGING REGION FILTERATION
+  bool _isRegionFiltered = false;
+  bool get isRegionFiltered => _isRegionFiltered;
+
+  set isRegionFiltered(value) {
+    _isRegionFiltered = value;
+    notifyListeners();
+  }
+
+  //! BOOLEAN MANAGING TIME ZONE FILTERATION
+  bool _isTimeZoneFiltered = false;
+  bool get isTimeZoneFiltered => _isTimeZoneFiltered;
+
+  set isTimeZoneFiltered(value) {
+    _isTimeZoneFiltered = value;
+    notifyListeners();
+  }
+
   //! String storing translation
   String _translationString = "eng";
   String get translationString => _translationString;
