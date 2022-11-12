@@ -38,6 +38,19 @@ class _CountriesWidgetState extends State<CountriesWidget> {
       //!BOTH FILTERED
       if (context.read<CountriesState>().isRegionFiltered &&
           context.read<CountriesState>().isTimeZoneFiltered) {
+        if (widget.countriesList!
+            .where((country) => (selectedRegionList.contains(country.region) &&
+                country.timezones!.toSet().containsAll(selectedTimeZoneList)))
+            .toList()
+            .isEmpty) {
+          return [
+            CountriesList(
+                name: Name(common: "Empty"),
+                capital: ["List"],
+                flags:
+                    Flags(png: "https://images.app.goo.gl/4rVJ634BGtKLve449"))
+          ];
+        }
         return widget.countriesList!
             .where((country) => (selectedRegionList.contains(country.region) &&
                 country.timezones!.toSet().containsAll(selectedTimeZoneList)))
@@ -73,28 +86,36 @@ class _CountriesWidgetState extends State<CountriesWidget> {
   @override
   Widget build(BuildContext context) {
     String groupBy(CountriesList country) {
-      // var selectedRegionList = context
-      //     .read<CountriesState>()
-      //     .selectableRegionList
-      //     .where(
-      //       (element) => element.isSelected == true,
-      //     )
-      //     .map((e) => e.data)
-      //     .toList();
+      var selectedRegionList = context
+          .read<CountriesState>()
+          .selectableRegionList
+          .where(
+            (element) => element.isSelected == true,
+          )
+          .map((e) => e.data)
+          .toList();
 
-      // var selectedTimeZoneList = context
-      //     .read<CountriesState>()
-      //     .selectableTimeZoneList
-      //     .where(
-      //       (element) => element.isSelected == true,
-      //     )
-      //     .map((e) => e.data)
-      //     .toList();
+      var selectedTimeZoneList = context
+          .read<CountriesState>()
+          .selectableTimeZoneList
+          .where(
+            (element) => element.isSelected == true,
+          )
+          .map((e) => e.data)
+          .toList();
       //!FILTERED
       if ((context.watch<CountriesState>().isFiltered)) {
         //!BOTH FILTERED
         if (context.read<CountriesState>().isRegionFiltered &&
             context.read<CountriesState>().isTimeZoneFiltered) {
+          if (widget.countriesList!
+              .where((country) => (selectedRegionList
+                      .contains(country.region) &&
+                  country.timezones!.toSet().containsAll(selectedTimeZoneList)))
+              .toList()
+              .isEmpty) {
+            return "No Countries Satisfy the given conditions";
+          }
           return "${country.region} ${country.timezones!.first}";
         } else {
           //!REGION FILTERED ONLY
@@ -137,7 +158,10 @@ class _CountriesWidgetState extends State<CountriesWidget> {
       itemBuilder: (context, country) {
         return InkWell(
           onTap: () {
-            Navigator.pushNamed(context, "/details", arguments: country);
+            if (country.name!.common == "Empty") {
+            } else {
+              Navigator.pushNamed(context, "/details", arguments: country);
+            }
           },
           child: ListTile(
             contentPadding: const EdgeInsets.all(0),
