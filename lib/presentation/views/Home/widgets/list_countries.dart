@@ -200,10 +200,16 @@ class _CountriesWidgetState extends State<CountriesWidget> {
                       : country.name!.common!
                   //!TEXT IS NOT FILTERED
                   : (context.watch<CountriesState>().translationSelected)
-                      ? country
-                          .translations![
-                              context.read<CountriesState>().translationString]!
-                          .common!
+                      ? (country.translations![context
+                                  .read<CountriesState>()
+                                  .translationString] ==
+                              null)
+                          ? country.name!.common!
+                          : country
+                              .translations![context
+                                  .read<CountriesState>()
+                                  .translationString]!
+                              .common!
                       : country.name!.common!,
               style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
