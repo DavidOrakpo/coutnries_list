@@ -7,7 +7,6 @@ import '../../../common_widgets/constants.dart';
 
 class CoutriesSearchDelegate extends SearchDelegate {
   @override
-  // TODO: implement searchFieldStyle
   TextStyle? get searchFieldStyle =>
       const TextStyle(color: Constants.primarySubTextColor);
 
